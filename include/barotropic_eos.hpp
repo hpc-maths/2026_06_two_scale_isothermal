@@ -23,7 +23,7 @@ public:
   BarotropicEOS(const BarotropicEOS&) = default;
 
   /**
-   * Default deconstructor
+   * Default destructor
    */
   virtual ~BarotropicEOS() = default;
 

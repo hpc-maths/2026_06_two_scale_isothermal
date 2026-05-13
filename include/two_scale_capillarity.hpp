@@ -74,7 +74,7 @@ public:
   /**
    * Routine to save the results
    * @param suffix suffix to be added to the name
-   * @param fields (variadic template) to specifiy the fields to be saved
+   * @param fields (variadic template) to specify the fields to be saved
    */
   template<class... Variables>
   void save(const std::string& suffix,
@@ -166,12 +166,12 @@ private:
 
   /**
    * Auxiliary routine to compute normals and curvature
-   @param update_grad specify if gradient has to be commputed as well (true by default)
+   * @param update_grad specify if gradient has to be commputed as well (true by default)
    */
   void update_geometry(const bool update_grad = true);
 
   /**
-   * Auxiliary routine to initialize the fields to the mesh
+   * Auxiliary routine to initialize the fields related to the mesh
    */
   void create_fields();
 
@@ -179,7 +179,7 @@ private:
    * Routine to initialize the variables (both conserved and auxiliary, this is problem dependent)
    * @param x0 x-center of liquid column
    * @param y0 y-center of liquid column
-   * @param U0 "gas" component of iniital horizontal velocity
+   * @param U0 "gas" component of horizontal velocity
    * @param U1 "liquid" component of horizontal velocity
    * @param V0 vertical velocity
    * @param R radius of the liquid column
@@ -209,8 +209,8 @@ private:
 
   /**
    * Auxiliary routine to check if spurious values are present
-   @param flag specify after which stage we are doing this check, i.e.
-               after MR (value 1) or after convective subsystem (value 0, default)
+   * @param flag specify after which stage we are doing this check, i.e.
+                 after MR (value 1) or after convective subsystem (value 0, default)
    */
   void check_data(unsigned flag = 0);
 
@@ -221,8 +221,8 @@ private:
 
   /**
    * Perform the finite volume stage (hyperbolic + capillarity subsystems)
-   @param numerical_flux_hyp numerical operator for convective subsystem
-   @param numerical_flux_cap numerical operator for capillarity subsystem
+   * @param numerical_flux_hyp numerical operator for convective subsystem
+   * @param numerical_flux_cap numerical operator for capillarity subsystem
    */
   void perform_fv_stage(auto& numerical_flux_hyp,
                         auto& numerical_flux_st);
@@ -243,6 +243,7 @@ private:
 
   /**
    * Execute the postprocessing
+   * @param time current time
    */
   void execute_postprocess(const Number time);
 };
@@ -802,6 +803,14 @@ void TwoScaleCapillarity<dim>::apply_relaxation() {
       mass_transfer_NR = false;
     }
   }
+
+  // Recompute geometric quantities in case update of curvature has been disabled
+  // to achieve convergence. This is usueful mainly for postprocessing purposes
+  // so as to have large-scale volume fraction gradient and curvature computed
+  // with the final computed volume fraction
+  if(Newton_iter >= max_Newton_iters/2) {
+    update_geometry();
+  }
 }
 
 // Implement a single step of the relaxation procedure (valid for a general EOS)
@@ -909,7 +918,7 @@ void TwoScaleCapillarity<dim>::perform_Newton_step_relaxation(auto local_conserv
         #endif
 
         // Bound preserving for the velocity
-        auto dtau_ov_epsilon_tmp = lambda*mom_dot_vel/(sigma*alpha_l_loc*dH*fac_Ru); /*--- TODO: Add a check in case of zero volume fraction ---*/
+        auto dtau_ov_epsilon_tmp = lambda*mom_dot_vel/(sigma*alpha_l_loc*dH*fac_Ru); // TODO: Add a check in case of zero volume fraction
         dtau_ov_epsilon          = std::min(dtau_ov_epsilon, dtau_ov_epsilon_tmp);
         #ifdef DEBUG
           if(dtau_ov_epsilon < static_cast<Number>(0.0)) {
@@ -1018,8 +1027,8 @@ void TwoScaleCapillarity<dim>::perform_Newton_step_relaxation(auto local_conserv
           }
         #endif
 
-        const auto R_Sigma_D = -dm_l*((static_cast<Number>(3.0)*Hmax/kappa)*inv_rho_liq_loc);
-        local_conserved_variables(RHO_Z_INDEX) += std::cbrt(rho_liq_loc*rho_liq_loc)*R_Sigma_D;
+        const auto R_Sigma_d = -dm_l*((static_cast<Number>(3.0)*Hmax/kappa)*inv_rho_liq_loc);
+        local_conserved_variables(RHO_Z_INDEX) += std::cbrt(rho_liq_loc*rho_liq_loc)*R_Sigma_d;
 
         const auto drho_fac_Ru = dtau_ov_epsilon*
                                  (sigma*alpha_l_loc*dH*fac_Ru)*rho_loc/mom_squared; /*--- u/u^{2} = rho*u/(rho*(u^{2})) = (rho/(rho*u)^{2})*(rho*u) ---*/
@@ -1063,9 +1072,9 @@ void TwoScaleCapillarity<dim>::save(const std::string& suffix,
   }
 
   samurai::save(path, fmt::format("{}{}", filename, suffix), mesh, fields...);
-  /*if(!(suffix.find("diverged") != std::string::npos)) {
+  if(!(suffix.find("diverged") != std::string::npos)) {
     samurai::dump(path, fmt::format("{}{}", filename, "_restart"), mesh, fields...);
-  }*/
+  }
 }
 
 // Execute postprocessing
@@ -1106,12 +1115,12 @@ void TwoScaleCapillarity<dim>::execute_postprocess(const Number time) {
                               // Compute pressures
                               const auto m_liq_loc     = m_l_loc + m_d_loc;
                               const auto alpha_liq_loc = alpha_l_loc + alpha_d_loc;
-                              const auto rho_liq_loc   = m_liq_loc/alpha_liq_loc; /*--- TODO: Add a check in case of zero volume fraction ---*/
+                              const auto rho_liq_loc   = m_liq_loc/alpha_liq_loc; // TODO: Add a check in case of zero volume fraction
                               const auto p_liq_loc     = EOS_phase_liq.pres_value(rho_liq_loc);
                               p_liq[cell]              = p_liq_loc;
 
                               const auto alpha_g_loc = static_cast<Number>(1.0) - alpha_liq_loc;
-                              const auto rho_g_loc   = m_g_loc/alpha_g_loc; /*--- TODO: Add a check in case of zero volume fraction ---*/
+                              const auto rho_g_loc   = m_g_loc/alpha_g_loc; // TODO: Add a check in case of zero volume fraction
                               const auto p_g_loc     = EOS_phase_gas.pres_value(rho_g_loc);
                               p_g[cell]              = p_g_loc;
 
@@ -1152,7 +1161,7 @@ void TwoScaleCapillarity<dim>::execute_postprocess(const Number time) {
 //
 template<std::size_t dim>
 void TwoScaleCapillarity<dim>::run(const std::size_t nfiles) {
-  // Default output arguemnts
+  // Default output arguments
   filename = "liquid_column_HLLC_order2";
   if(mass_transfer) {
     filename += "_mass_transfer";

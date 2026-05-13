@@ -47,7 +47,7 @@ struct Default: public samurai::Bc<Field> {
  * @param uy_D boundary vertical component of the velocity
  * @param alpha_l_D boundary large-scale volume fraction
  * @param alpha_d_D boundary small-scale volume fraction
- * @param Sigma_D boundary small-scale interfacial area density
+ * @param Sigma_d_D boundary small-scale interfacial area density
  */
 template<class Field>
 auto Inlet(const Field& Q,
@@ -55,8 +55,8 @@ auto Inlet(const Field& Q,
            const typename Field::value_type uy_D,
            const typename Field::value_type alpha_l_D,
            const typename Field::value_type alpha_d_D,
-           const typename Field::value_type Sigma_D) {
-  return[&Q, ux_D, uy_D, alpha_l_D, alpha_d_D, Sigma_D]
+           const typename Field::value_type Sigma_d_D) {
+  return[&Q, ux_D, uy_D, alpha_l_D, alpha_d_D, Sigma_d_D]
   (const auto& /*normal*/, const auto& cell_in, const auto& /*coord*/)
   {
     // Pre-fetch some variables used multiple times in order to exploit possible vectorization
@@ -83,7 +83,7 @@ auto Inlet(const Field& Q,
     const auto m_d_D           = alpha_d_D*rho_liq_loc;
     Q_ghost[Md_INDEX]          = m_d_D;
     const auto rho_D           = m_l_D + m_g_D + m_d_D;
-    Q_ghost[RHO_Z_INDEX]       = Sigma_D*std::cbrt(rho_liq_loc*rho_liq_loc);
+    Q_ghost[RHO_Z_INDEX]       = Sigma_d_D*std::cbrt(rho_liq_loc*rho_liq_loc);
     Q_ghost[RHO_ALPHA_l_INDEX] = rho_D*alpha_l_D;
     Q_ghost[RHO_U_INDEX]       = rho_D*ux_D;
     Q_ghost[RHO_U_INDEX + 1]   = rho_D*uy_D;

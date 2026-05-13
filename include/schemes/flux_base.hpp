@@ -52,7 +52,7 @@ namespace samurai {
      * Evaluate the 'continuous' flux
      * @param q state
      * @param curr_d current direction
-     * @param grad_alpha_l gradient of large-scael volume fraction (needed for capillarity)
+     * @param grad_alpha_l gradient of large-scale volume fraction (needed for capillarity)
      */
     FluxValue<cfg> evaluate_continuous_flux(const FluxValue<cfg>& q,
                                             const std::size_t curr_d,
@@ -68,7 +68,7 @@ namespace samurai {
 
     /**
      * Evaluate the surface tension operator
-     * @param q state
+     * @param grad_alpha_l gradient of large-scale volume fraction
      * @param curr_d current direction
      */
     template<class Field_Vect>
@@ -85,7 +85,7 @@ namespace samurai {
     /**
      * Conversion from primitive to conserved variables
      * @param prim primitive variables
-     * @return prim conserved variables
+     * @return cons conserved variables
      */
     FluxValue<cfg> prim2cons(const FluxValue<cfg>& prim) const;
   };
