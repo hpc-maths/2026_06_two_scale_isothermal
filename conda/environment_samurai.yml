@@ -1,0 +1,14 @@
+name: samurai-0.27
+channels:
+  - conda-forge
+dependencies:
+  - cmake
+  - cxx-compiler
+  - cli11
+  - samurai=0.27
+  - libboost-mpi
+  - libboost-devel
+  - libboost-headers
+  - 'hdf5=*=mpi*'
+  - mpich
+  - nlohmann_json

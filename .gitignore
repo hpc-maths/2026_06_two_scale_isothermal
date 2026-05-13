@@ -1,0 +1,15 @@
+*.xdmf
+*.h5
+
+*/CMakeCache.txt
+*/CMakeFiles
+*/Makefile
+*/cmake_install.cmake
+
+*/build
+
+.DS_Store
+*/.DS_Store
+*/*/.DS_Store
+
+two_scale_capillarity
