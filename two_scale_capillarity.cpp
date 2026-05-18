@@ -17,8 +17,14 @@ int main(int argc, char* argv[]) {
 
   auto& app = samurai::initialize("Finite volume example for the air-blasted liquid column configuration", argc, argv);
 
-  std::ifstream ifs("input.json"); // Read a JSON file
-  json input = json::parse(ifs);
+  json input;
+  try {
+    std::ifstream ifs("input.json"); // Read a JSON file
+    input = json::parse(ifs);
+  }
+  catch(const json::parse_error& e) {
+    throw std::runtime_error("Cannot parse parameter file 'input.json'. Please verify that the file is present");
+  }
 
   /*--- Set and declare simulation parameters ---*/
   using Number = TwoScaleCapillarity<EquationData::dim>::Number;
