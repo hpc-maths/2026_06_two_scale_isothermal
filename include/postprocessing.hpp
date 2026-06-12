@@ -56,9 +56,9 @@ public:
    * @param q integral quantities to be written
    */
   void write(const Number time, const IntegralQuantities<Number>& q) {
-    Utilities::write_data(Hlig, time, q.H_lig);
-    Utilities::write_data(grad_alpha_l_integral, time, q.grad_alpha_l_int);
-    Utilities::write_data(Sigma_d_integral, time, q.Sigma_d_int);
+    Utilities::write_data(Hlig, time, Utilities::mpi_reduce_max(q.H_lig));
+    Utilities::write_data(grad_alpha_l_integral, time, Utilities::mpi_reduce_sum(q.grad_alpha_l_int));
+    Utilities::write_data(Sigma_d_integral, time, Utilities::mpi_reduce_sum(q.Sigma_d_int));
   }
 
 private:
