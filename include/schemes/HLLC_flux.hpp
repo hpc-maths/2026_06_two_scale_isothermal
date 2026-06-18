@@ -259,7 +259,7 @@ namespace samurai {
            // Compute now the "discrete" flux function, in this case a HLLC flux
            HLLC_f[d].cons_flux_function = [&](FluxValue<cfg>& flux,
                                               const StencilData<cfg>& data,
-                                              const StencilValues<cfg> field)
+                                              const StencilValues<cfg>& field)
                                               {
                                                 // MUSCL reconstruction
                                                 const FluxValue<cfg> primLL = this->cons2prim(field[0]);
