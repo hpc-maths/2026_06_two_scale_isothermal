@@ -1,4 +1,4 @@
-This repository contains a numerical solver implementing the proof of concept for the novel unified isothermal two-phase two-scale model presented in the paper ''A two-scale two-phase flow model for the separate-to-disperse phase transition in atomizing flows''.
+This repository contains a numerical solver implementing the proof of concept for the novel unified isothermal two-phase two-scale model presented in the paper ''A two-scale two-phase flow model for the separate-to-disperse phase transition in atomizing flows'' ([hal-05673253](https://hal.science/hal-05673253)).
 The implementation is carried out in the framework of [samurai](https://github.com/hpc-maths/samurai).
 We refer the reader to the aforementioned paper for a detailed description of the numerical strategy, which is based on an operator-splitting approach and an innovative bound-preserving strategy (see in particular Section 5 and Appendix D).
 
