@@ -193,7 +193,7 @@ private:
 
   /**
    * Auxiliary routine for the boundary conditions
-   * @param U0 "gas" component of iniital horizontal velocity
+   * @param U0 "gas" component of initial horizontal velocity
    * @param V0 vertical velocity
    * @param alpha_residual initial 'residual' volume fraction
    */
