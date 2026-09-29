@@ -951,7 +951,7 @@ void TwoScaleCapillarity<dim>::run(const std::size_t nfiles) {
   #endif
 
   // Declare operators for MR
-  auto MRadaptation = samurai::make_MRAdapt(conserved_variables);
+  auto MRadaptation = samurai::make_MRAdapt(grad_alpha_l);
   auto mra_config   = samurai::mra_config();
   mra_config.epsilon(MR_param);
   mra_config.regularity(MR_regularity);
@@ -961,7 +961,7 @@ void TwoScaleCapillarity<dim>::run(const std::size_t nfiles) {
   std::size_t nt    = 0;
   while(t != Tf) {
     // Apply mesh adaptation
-    MRadaptation(mra_config);
+    MRadaptation(mra_config, conserved_variables);
     alpha_l.resize();
     recompute_alpha_l();
     #ifdef DEBUG
@@ -969,7 +969,7 @@ void TwoScaleCapillarity<dim>::run(const std::size_t nfiles) {
     #endif
 
     // Compute the time step
-    grad_alpha_l.resize();
+    //grad_alpha_l.resize();
     normal.resize();
     H.resize();
     update_gradient();

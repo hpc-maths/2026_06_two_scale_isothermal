@@ -36,7 +36,7 @@
 
  "min-level": 8,
  "max-level": 8,
- "MR_param": 1e-1,
+ "MR_param": 1e-3,
  "MR_regularity": 0,
 
  "nfiles": 10,
