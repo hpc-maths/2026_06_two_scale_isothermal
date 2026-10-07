@@ -68,7 +68,7 @@ int main(int argc, char* argv[]) {
   sim_param.rtol_Newton      = input.value("rtol_Newton", static_cast<Number>(1e-10));
   sim_param.max_Newton_iters = input.value("max_Newton_iters", static_cast<std::size_t>(60));
 
-  // MR paramters
+  // MR parameters
   sim_param.min_level     = input.value("min-level", static_cast<std::size_t>(8));
   sim_param.max_level     = input.value("max-level", static_cast<std::size_t>(8));
   sim_param.MR_param      = input.value("MR_param", static_cast<double>(1e-1));
@@ -97,7 +97,7 @@ int main(int argc, char* argv[]) {
   app.add_option("--mass_transfer", sim_param.mass_transfer,
                  "Choose whether to perform or not the mass transfer")->capture_default_str()->group("Physical parameters");
   app.add_option("--kappa", sim_param.kappa,
-                 "Small-scale disperse phase raidus with rispect to maximum curvature")->capture_default_str()->group("Physical parameters");
+                 "Small-scale disperse phase radius with respect to maximum curvature")->capture_default_str()->group("Physical parameters");
   app.add_option("--Hmax", sim_param.Hmax,
                  "Maximum curvature before activating atomization")->capture_default_str()->group("Physical parameters");
   app.add_option("--alpha_d_max", sim_param.alpha_d_max,

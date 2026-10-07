@@ -99,7 +99,7 @@ private:
 
   bool apply_relax; /*!< Choose whether to apply or not the relaxation */
 
-  const bool   mass_transfer; /*!< Choose wheter to apply or not the mass transfer */
+  const bool   mass_transfer; /*!< Choose whether to apply or not the mass transfer */
   const Number alpha_d_max;   /*!< Maximum threshold of small-scale volume fraction */
   const Number alpha_l_min;   /*!< Minimum large-scale volume fraction to identify the mixture region */
   const Number alpha_l_max;   /*!< Maximum large-scale volume fraction to identify the mixture region */
@@ -126,7 +126,7 @@ private:
   std::string filename; /*!< Auxiliary variable to store the name of output */
 
   Field conserved_variables; /*!< The variable which stores the conserved variables,
-                                  namely the varialbes for which we solve a PDE system */
+                                  namely the variables for which we solve a PDE system */
   Field conserved_variables_tmp; /*!< Auxiliary field since we are solving a time-dependent PDE */
 
   /*--- Now we declare a bunch of fields which depend from the state, but it is useful
@@ -165,7 +165,7 @@ private:
 
   /**
    * Auxiliary routine to compute normals and curvature
-   * @param update_grad specify if gradient has to be commputed as well (true by default)
+   * @param update_grad specify if gradient has to be computed as well (true by default)
    */
   void update_geometry(const bool update_grad = true);
 
@@ -788,7 +788,7 @@ void TwoScaleCapillarity<dim>::apply_relaxation(auto& relaxation_op) {
   }
 
   // Recompute geometric quantities in case update of curvature has been disabled
-  // to achieve convergence. This is usueful mainly for postprocessing purposes
+  // to achieve convergence. This is useful mainly for postprocessing purposes
   // so as to have large-scale volume fraction gradient and curvature computed
   // with the final computed volume fraction
   if(Newton_iter >= max_Newton_iters/2) {
@@ -845,7 +845,7 @@ void TwoScaleCapillarity<dim>::execute_postprocess(const Number time) {
 
                               const auto& grad_alpha_l_loc = grad_alpha_l[cell];
 
-                              // Compue H_lig
+                              // Compute H_lig
                               if(alpha_l_loc > alpha_l_min && alpha_l_loc < alpha_l_max &&
                                  alpha_d_loc < alpha_d_max) {
                                 local_q.H_lig = std::max(H[cell], local_q.H_lig);
@@ -989,7 +989,7 @@ void TwoScaleCapillarity<dim>::run(const std::size_t nfiles) {
     conserved_variables_old.resize();
     conserved_variables_old = conserved_variables;
 
-    // Solve the hyperbolic + capillarity subsytems
+    // Solve the hyperbolic + capillarity subsystems
     conserved_variables_tmp.resize();
     perform_fv_stage(numerical_flux_hyp, numerical_flux_st);
 
@@ -1005,7 +1005,7 @@ void TwoScaleCapillarity<dim>::run(const std::size_t nfiles) {
     }
 
     // Consider the second stage for the second order
-    // Solve the hyperbolic + capillarity subsytems
+    // Solve the hyperbolic + capillarity subsystems
     perform_fv_stage(numerical_flux_hyp, numerical_flux_st);
 
     // Complete evaluation before applying relaxation

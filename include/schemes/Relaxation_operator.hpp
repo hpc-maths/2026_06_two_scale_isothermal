@@ -82,7 +82,7 @@ namespace samurai {
 
     /**
      * Set the value of the flag to check whether mass transfer inside relaxation has to be done or not
-     * @param mass_transfer_NR_ flag to check whether mass trasnfer is desired inside relaxation
+     * @param mass_transfer_NR_ flag to check whether mass transfer is desired inside relaxation
      */
     inline void set_mass_transfer_NR(const bool mass_transfer_NR_);
 
@@ -281,7 +281,7 @@ namespace samurai {
                                                          On the other hand, there is no a priori superior limit, apart from the alpha_d_max
                                                          which deactivates the mass transfer.
                                                          Hence, in the first iteration, one can potentially reach alpha_d > alpha_d_max
-                                                         (likely unphyisical, but not impossible...) ---*/
+                                                         (likely unphysical, but not impossible...) ---*/
                                                  }
 
                                                  // Bound-preserving condition for large-scale volume fraction

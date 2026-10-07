@@ -42,7 +42,7 @@ namespace Utilities {
   /**
    * Auxiliary function to convert unsigned to string
    * @param value the value to be converted
-   * @param digits number of digits desidered in the conversion (5 by default)
+   * @param digits number of digits desired in the conversion (5 by default)
    */
   template<typename T>
   std::string unsigned_to_string(const T value, const unsigned digits = 5) {
@@ -76,7 +76,7 @@ namespace Utilities {
 
   /**
    * Auxiliary function for max with mpi
-   * @param local_val the local value for which we llok for the max
+   * @param local_val the local value for which we look for the max
    */
   template<typename T>
   inline T mpi_reduce_max(const T local_val) {
