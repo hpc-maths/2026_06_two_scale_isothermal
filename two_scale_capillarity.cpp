@@ -103,7 +103,7 @@ int main(int argc, char* argv[]) {
   app.add_option("--alpha_d_max", sim_param.alpha_d_max,
                  "Maximum admitted small-scale volume fraction")->capture_default_str()->group("Physical parameters");
   app.add_option("--alpha_l_min", sim_param.alpha_l_min,
-                 "Maximum effective volume fraction for the mixture region")->capture_default_str()->group("Physical parameters");
+                 "Minimum effective volume fraction for the mixture region")->capture_default_str()->group("Physical parameters");
   app.add_option("--alpha_l_max", sim_param.alpha_l_max,
                  "Maximum effective volume fraction for the mixture region")->capture_default_str()->group("Physical parameters");
 
