@@ -119,8 +119,10 @@ private:
                                                  // barotropic EOS to compute the speed of sound
 
   samurai::HLLCFlux<Field> HLLC_flux; /*!< Auxiliary variable to compute the flux for the hyperbolic operator */
-  samurai::SurfaceTensionFlux<Field, Field_Vect> SurfaceTension_flux; /*!< Auxiliary variable to compute the contribution associated with surface tension */
-  samurai::RelaxationOperator<Field> Relaxation_operator; /*!< Auxiliary variable to compute the contribution associated with source term (relaxation) */
+  samurai::SurfaceTensionFlux<Field, Field_Vect> SurfaceTension_flux; /*!< Auxiliary variable to compute the contribution
+                                                                           associated with surface tension */
+  samurai::RelaxationOperator<Field> Relaxation_operator; /*!< Auxiliary variable to compute the contribution
+                                                               associated with source term (relaxation) */
 
   fs::path    path;     /*!< Auxiliary variable to store the output directory */
   std::string filename; /*!< Auxiliary variable to store the name of output */
@@ -400,7 +402,8 @@ void TwoScaleCapillarity<dim>::init_variables(const Number x0, const Number y0,
                               alpha_d[cell]                          = static_cast<Number>(0.0);
                               conserved_variables[cell](RHO_Z_INDEX) = static_cast<Number>(0.0);
                               const auto rho_liq_ref                 = EOS_phase_liq.get_rho0();
-                              Sigma_d[cell]                          = conserved_variables[cell](RHO_Z_INDEX)/std::cbrt(rho_liq_ref*rho_liq_ref);
+                              Sigma_d[cell]                          = conserved_variables[cell](RHO_Z_INDEX)/
+                                                                       std::cbrt(rho_liq_ref*rho_liq_ref);
                               conserved_variables[cell](Md_INDEX)    = alpha_d[cell]*rho_liq_ref;
 
                               // Recompute geometric locations to set partial masses

@@ -93,11 +93,13 @@ int main(int argc, char* argv[]) {
 
   app.add_option("--sigma", sim_param.sigma, "Surface tension coefficient")->capture_default_str()->group("Physical parameters");
 
-  app.add_option("--apply_relaxation", sim_param.apply_relaxation, "Apply or not relaxation")->capture_default_str()->group("Physical parameters");
+  app.add_option("--apply_relaxation", sim_param.apply_relaxation,
+                 "Apply or not relaxation")->capture_default_str()->group("Physical parameters");
   app.add_option("--mass_transfer", sim_param.mass_transfer,
                  "Choose whether to perform or not the mass transfer")->capture_default_str()->group("Physical parameters");
   app.add_option("--kappa", sim_param.kappa,
-                 "Small-scale disperse phase radius with respect to maximum curvature")->capture_default_str()->group("Physical parameters");
+                 "Small-scale disperse phase radius with respect to maximum curvature")
+                 ->capture_default_str()->group("Physical parameters");
   app.add_option("--Hmax", sim_param.Hmax,
                  "Maximum curvature before activating atomization")->capture_default_str()->group("Physical parameters");
   app.add_option("--alpha_d_max", sim_param.alpha_d_max,
@@ -119,7 +121,8 @@ int main(int argc, char* argv[]) {
   // Numerical parameters
   app.add_option("--cfl", sim_param.Courant, "The Courant number")->capture_default_str()->group("Numerical parameters");
 
-  app.add_option("--alpha_residual", sim_param.alpha_residual, "Residual large scale volume fraction")->capture_default_str()->group("Numerical parameters");
+  app.add_option("--alpha_residual", sim_param.alpha_residual,
+                 "Residual large scale volume fraction")->capture_default_str()->group("Numerical parameters");
   app.add_option("--mod_grad_alpha_l_min", sim_param.mod_grad_alpha_l_min,
                  "Tolerance for zero gradient volume fraction")->capture_default_str()->group("Numerical parameters");
 

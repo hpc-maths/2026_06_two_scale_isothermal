@@ -21,7 +21,8 @@ namespace samurai {
 
     using Number = Flux<Field>::Number; // Define the shortcut for the arithmetic type
     using cfg_st = Flux<Field>::template cfg_st<Field_Vect>; // Shortcut to specify the type of configuration
-                                                             // for the flux (nonlinear in this case with input_size different than output_size)
+                                                             // for the flux (nonlinear in this case
+                                                             // with input_size different than output_size)
 
     /**
      * Class constructor

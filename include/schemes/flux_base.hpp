@@ -22,7 +22,8 @@ namespace samurai {
   public:
     // Definitions and sanity checks
     static_assert(Field::dim == EquationData::dim, "The spatial dimensions between Field and the parameter list do not match");
-    static_assert(Field::n_comp == EquationData::NVARS, "The number of elements in the state does not correspond to the number of equations");
+    static_assert(Field::n_comp == EquationData::NVARS,
+                  "The number of elements in the state does not correspond to the number of equations");
     static constexpr std::size_t stencil_size = 4;
 
     using cfg = FluxConfig<SchemeType::NonLinear, stencil_size, Field, Field>;
